@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{533AB47A-D1B5-45DB-A37E-F053FA3699C4}</ProjectGuid>
+    <RootNamespace>CollectionManager</RootNamespace>
+    <AssemblyName>CollectionManager</AssemblyName>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+    <AssemblyTitle>CollectionManager</AssemblyTitle>
+    <Product></Product>
+    <Description>Implements read/write access to osu! db &amp; osdb collection files, along with ability to edit these in a reasonable manner</Description>
+    <Copyright>Copyright © 2019</Copyright>
+    <Authors>Piotrekol</Authors>
+    <Company />
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Piotrekol/CollectionManager/tree/master/CollectionManagerDll</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Piotrekol/CollectionManager/tree/master/CollectionManagerDll</RepositoryUrl>
+    <PackageTags>osu!</PackageTags>
+    <Version>1.0.8</Version>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Remote Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="SharpCompress" Version="0.23.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.*" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.*" />
+  </ItemGroup>
+</Project>
