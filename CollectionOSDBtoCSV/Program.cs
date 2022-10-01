@@ -28,7 +28,7 @@ namespace CollectionOSDBtoCSV
             var collections = OsuFileIo.CollectionLoader.LoadOsdbCollections(input);
 
             string[] lines = new string[collections.AllBeatmaps().Count() + 1];
-            lines[0] = "\"" + "Collection" + "\",\"" + "StarsNomod" + "\",\"" + "Artist" + "\",\"" + "ArtistRoman" + "\",\"" + "ArtistUnicode" + "\",\"" + "DiffName" + "\",\"" + "MapId" + "\",\"" + "MapLink" + "\",\"" + "MapSetId" + "\",\"" + "MapSetLink" + "\",\"" + "Md5" + "\",\"" + "Name" + "\",\"" + "PlayMode" + "\",\"" + "Title" + "\",\"" + "TitleRoman" + "\",\"" + "TitleUnicode" + "\"";
+            lines[0] = "\"" + "CollectionName" + "\",\"" + "StarsNomod" + "\",\"" + "ArtistRoman" + "\",\"" + "ArtistUnicode" + "\",\"" + "DiffName" + "\",\"" + "MapId" + "\",\"" + "MapSetId" + "\",\"" + "Md5" + "\",\"" + "Name" + "\",\"" + "PlayMode" + "\",\"" + "TitleRoman" + "\",\"" + "TitleUnicode" + "\"";
             int i = 1;
 
             foreach (var collection in collections)
@@ -40,22 +40,18 @@ namespace CollectionOSDBtoCSV
                 foreach (var beatmap in beatmaps)
                 {
                     var StarsNomod = beatmap.StarsNomod;
-                    var Artist = beatmap.Artist;
                     var ArtistRoman = beatmap.ArtistRoman;
                     var ArtistUnicode = beatmap.ArtistUnicode;
                     var DiffName = beatmap.DiffName;
                     var MapId = beatmap.MapId;
-                    var MapLink = beatmap.MapLink;
                     var MapSetId = beatmap.MapSetId;
-                    var MapSetLink = beatmap.MapSetLink;
                     var Md5 = beatmap.Md5;
                     var Name = beatmap.Name;
                     var PlayMode = beatmap.PlayMode;
-                    var Title = beatmap.Title;
                     var TitleRoman = beatmap.TitleRoman;
                     var TitleUnicode = beatmap.TitleUnicode;
 
-                    lines[i] = "\"" + CollectionName + "\",\"" + StarsNomod + "\",\"" + Artist + "\",\"" + ArtistRoman + "\",\"" + ArtistUnicode + "\",\"" + DiffName + "\",\"" + MapId + "\",\"" + MapLink + "\",\"" + MapSetId + "\",\"" + MapSetLink + "\",\"" + Md5 + "\",\"" + Name + "\",\"" + PlayMode + "\",\"" + Title + "\",\"" + TitleRoman + "\",\"" + TitleUnicode + "\"";
+                    lines[i] = "\"" + CollectionName + "\",\"" + StarsNomod + "\",\"" + ArtistRoman + "\",\"" + ArtistUnicode + "\",\"" + DiffName + "\",\"" + MapId + "\",\"" + MapSetId + "\",\"" + Md5 + "\",\"" + Name + "\",\"" + PlayMode + "\",\"" + TitleRoman + "\",\"" + TitleUnicode + "\"";
 
                     i++;
                 }
