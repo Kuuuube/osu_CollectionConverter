@@ -85,7 +85,7 @@ namespace CollectionManager.DataTypes
             {
                 return new DateTime(ticks, DateTimeKind.Utc);
             }
-            catch (Exception e)
+            catch
             {
                 return new DateTime();
             }

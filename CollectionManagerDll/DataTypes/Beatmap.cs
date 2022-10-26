@@ -76,7 +76,12 @@ namespace CollectionManager.DataTypes
         }
         //TODO: add helper functions for adding/removing star values
         public PlayModeStars ModPpStars = new PlayModeStars();
-        public double StarsNomod => Stars(PlayMode);
+
+        //This change makes the field not readonly but will break things if getting SR from the osu! database is ever needed
+        public double StarsNomod;// => Stars(PlayMode);
+
+        //Used to fix dumping SR from osdb
+        public double StarsNomodParse => Stars(PlayMode);
 
         public double Stars(PlayMode playMode, Mods mods = Mods.Nm)
         {
