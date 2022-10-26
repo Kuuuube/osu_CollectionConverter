@@ -1,7 +1,7 @@
 ﻿using CollectionManager.DataTypes;
 using CollectionManager.Modules.FileIO;
 
-namespace CollectionOSDBtoCSV
+namespace CollectionConverter
 {
     class Program
     {
