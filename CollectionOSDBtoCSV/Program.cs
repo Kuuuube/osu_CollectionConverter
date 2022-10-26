@@ -11,11 +11,13 @@ namespace CollectionOSDBtoCSV
         {
             string input;
             string output;
+            string option;
 
             if (args.Length != 0)
             {
                 input = args[0];
                 output = args[1];
+                option = args[2];
             }
             else
             {
@@ -23,8 +25,18 @@ namespace CollectionOSDBtoCSV
                 input = Console.ReadLine();
                 Console.WriteLine("Enter Output Path:");
                 output = Console.ReadLine();
+                Console.WriteLine("Enter Option:");
+                option = Console.ReadLine();
             }
 
+            if (option == "1")
+            {
+                osdb_to_csv(input, output);
+            }
+        }
+
+        public static void osdb_to_csv(string input, string output)
+        {
             var collections = OsuFileIo.CollectionLoader.LoadOsdbCollections(input);
 
             string[] lines = new string[collections.AllBeatmaps().Count() + 1];
@@ -55,7 +67,6 @@ namespace CollectionOSDBtoCSV
 
                     i++;
                 }
-
             }
 
             using StreamWriter outputfile = new(output);
