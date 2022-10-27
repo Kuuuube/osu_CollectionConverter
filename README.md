@@ -36,7 +36,7 @@ The method to use for conversion.
 
 The amount of header rows for CSV files. 
 
-When using CSV input this amount of rows will be ignored. When using CSV output and value above 1 will generate a header and 0 will generate no header.
+When using CSV input this amount of rows will be ignored. When using CSV output any value above 1 will generate a header and 0 will generate no header.
 
 ## Dependencies
 
