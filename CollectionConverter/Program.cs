@@ -34,9 +34,9 @@ namespace CollectionConverter
                 input = Console.ReadLine();
                 Console.WriteLine("Enter Output Path:");
                 output = Console.ReadLine();
-                Console.WriteLine("Enter Input Format:\n1. DB\n2. OSDB\n3. CSV");
+                Console.WriteLine("Enter Input Format:\n1. DB (osu! collection format)\n2. OSDB (Collection Manager format)\n3. CSV (CSV in Collection Converter format)");
                 input_format = Console.ReadLine();
-                Console.WriteLine("Enter Output Format:\n1. DB\n2. OSDB\n3. CSV");
+                Console.WriteLine("Enter Output Format:\n1. DB (osu! collection format)\n2. OSDB (Collection Manager format)\n3. CSV (CSV in Collection Converter format)");
                 output_format = Console.ReadLine();
                 if (input_format == "3" || output_format == "3")
                 {
