@@ -11,15 +11,22 @@ namespace CollectionConverter
         {
             string input;
             string output;
-            string option;
-            int headers;
+            string input_format;
+            string output_format;
+            int headers = 0;
+
+            Collections collection_loaded = new Collections();
 
             if (args.Length != 0)
             {
                 input = args[0];
                 output = args[1];
-                option = args[2];
-                headers = int.Parse(args[3]);
+                input_format = args[2];
+                output_format = args[3];
+                if (input_format == "3" || output_format == "3")
+                {
+                    headers = int.Parse(args[4]);
+                }
             }
             else
             {
@@ -27,33 +34,77 @@ namespace CollectionConverter
                 input = Console.ReadLine();
                 Console.WriteLine("Enter Output Path:");
                 output = Console.ReadLine();
-                Console.WriteLine("Enter Option:");
-                option = Console.ReadLine();
-                Console.WriteLine("Number of header rows:");
-                headers = int.Parse(Console.ReadLine());
+                Console.WriteLine("Enter Input Format:\n1. DB\n2. OSDB\n3. CSV");
+                input_format = Console.ReadLine();
+                Console.WriteLine("Enter Output Format:\n1. DB\n2. OSDB\n3. CSV");
+                output_format = Console.ReadLine();
+                if (input_format == "3" || output_format == "3")
+                {
+                    Console.WriteLine("Header row in CSV:\n0. No header row\n1. One header row");
+                    headers = int.Parse(Console.ReadLine());
+                }
             }
 
-            switch (option)
+            switch (input_format)
             {
                 case "1":
                 {
-                    osdb_to_csv(input, output, headers);
+                    collection_loaded = import_db(input);
                     break;
                 }
                 case "2":
                 {
-                    csv_to_osdb(input, output, headers);
+                    collection_loaded = import_osdb(input);
+                    break;
+                }
+                case "3":
+                {
+                    collection_loaded = import_csv(input, headers);
                     break;
                 }
                 default:
                 {
-                    Console.WriteLine("Invalid option.");
+                    Console.WriteLine("Invalid input format.");
+                    break;
+                }
+            }
+
+            switch (output_format)
+            {
+                case "1":
+                {
+                    export_db(output, collection_loaded);
+                    break;
+                }
+                case "2":
+                {
+                    export_osdb(output, collection_loaded);
+                    break;
+                }
+                case "3":
+                {
+                    export_csv(output, headers, collection_loaded);
+                    break;
+                }
+                default:
+                {
+                    Console.WriteLine("Invalid output format.");
                     break;
                 }
             }
         }
 
-        public static void csv_to_osdb(string input, string output, int headers)
+        public static Collections import_db(string input)
+        {
+            return OsuFileIo.CollectionLoader.LoadOsuCollection(input);
+        }
+
+        public static Collections import_osdb(string input)
+        {
+            return OsuFileIo.CollectionLoader.LoadOsdbCollections(input);
+        }
+
+        public static Collections import_csv(string input, int headers)
         {
             string[] lines;
             if (headers == 0)
@@ -155,17 +206,45 @@ namespace CollectionConverter
                                 break;
                             }
                         }
+
                         try
                         {
                         current_beatmap.ArtistRoman = values[5].Trim('\"');
+                        }
+                        catch
+                        {
+                        }
+
+                        try
+                        {
                         current_beatmap.ArtistUnicode = values[6].Trim('\"');
+                        }
+                        catch
+                        {
+                        }
+
+                        try
+                        {
                         current_beatmap.TitleRoman = values[7].Trim('\"');
+                        }
+                        catch
+                        {
+                        }
+
+                        try
+                        {
                         current_beatmap.TitleUnicode = values[8].Trim('\"');
+                        }
+                        catch
+                        {
+                        }
+
+                        try
+                        {
                         current_beatmap.DiffName = values[9].Trim('\"');
                         }
                         catch
                         {
-
                         }
 
                         try
@@ -186,14 +265,22 @@ namespace CollectionConverter
                 current_collection = null;
             }
 
-            OsuFileIo.CollectionLoader.SaveOsdbCollection(collections, output);
+            return collections;
         }
 
-        public static void osdb_to_csv(string input, string output, int headers)
+        public static void export_db(string output, Collections collection_data)
         {
-            var collections = OsuFileIo.CollectionLoader.LoadOsdbCollections(input);
+            OsuFileIo.CollectionLoader.SaveOsuCollection(collection_data, output);
+        }
 
-            string[] lines = new string[collections.AllBeatmaps().Count() + 1];
+        public static void export_osdb(string output, Collections collection_data)
+        {
+            OsuFileIo.CollectionLoader.SaveOsdbCollection(collection_data, output);
+        }
+
+        public static void export_csv(string output, int headers, Collections collection_data)
+        {
+            string[] lines = new string[collection_data.AllBeatmaps().Count() + 1];
 
             int i;
             if (headers >= 1)
@@ -206,7 +293,7 @@ namespace CollectionConverter
                 i = 0;
             }
             
-            foreach (var collection in collections)
+            foreach (var collection in collection_data)
             {
                 string CollectionName = collection.Name;
 
