@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollectionManagerDll", "CollectionManagerDll\CollectionManagerDll.csproj", "{533AB47A-D1B5-45DB-A37E-F053FA3699C4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollectionConverter", "CollectionConverter\CollectionOSDBtoCSV.csproj", "{30518F1B-C672-4067-8C55-8FCEC1E45FB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollectionConverter", "CollectionConverter\CollectionConverter.csproj", "{30518F1B-C672-4067-8C55-8FCEC1E45FB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
