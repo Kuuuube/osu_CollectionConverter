@@ -58,7 +58,9 @@ Filling all cells is not required. Blank cells will result in the collection mis
 
 Raw Format:
 
+```
 "CollectionName","MapId","MapSetId","Md5","PlayMode","ArtistRoman","ArtistUnicode","TitleRoman","TitleUnicode","DiffName","StarsNomod"
+```
 
 Format in table:
 
