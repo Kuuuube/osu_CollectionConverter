@@ -52,6 +52,20 @@ The amount of header rows for CSV files. This value is unused when input or outp
 
 `1`: One header row
 
+## Collection Converter CSV Format
+
+Filling all cells is not required. Blank cells will result in the collection missing data for the blank cell only.
+
+Raw Format:
+
+"CollectionName","MapId","MapSetId","Md5","PlayMode","ArtistRoman","ArtistUnicode","TitleRoman","TitleUnicode","DiffName","StarsNomod"
+
+Format in table:
+
+| CollectionName | MapId	| MapSetId	| Md5	| PlayMode	| ArtistRoman	| ArtistUnicode	| TitleRoman	| TitleUnicode	| DiffName	| StarsNomod |
+| :------------- | :------- | :-------- | ----: |---------: |-------------: |-------------: |-------------: |-------------: |---------: |----------: |
+|                |          |           |       |           |               |               |               |               |           |            |
+
 ## Dependencies
 
 .Net Runtime 6.0 x64: https://dotnet.microsoft.com/en-us/download/dotnet/6.0
