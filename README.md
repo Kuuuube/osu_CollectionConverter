@@ -13,7 +13,7 @@ Either run with or without command line args.
 ## Command line args:
 
 ```
-CollectionConverter {Input} {Output} {Conversion Option} {Number of Header Rows}
+CollectionConverter {Input} {Output} {Input Format} {Output Format} {Number of Header Rows}
 ```
 
 ### Input
