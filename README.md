@@ -1,4 +1,4 @@
-# osu! CollectionConverter
+# osu! Collection Converter
 
 Converts between different osu! collection formats.
 
@@ -24,19 +24,33 @@ The relative or absolute file path for the input file.
 
 The relative or absolute file path for the output file.
 
-### Conversion Option
+### Input Format
 
-The method to use for conversion.
+The format of the input file.
 
-`1`: OSDB to CSV
+`1`: DB (osu! collection format)
 
-`2`: CSV to OSDB
+`2`: OSDB (Collection Manager format)
+
+`3`: CSV (CSV in Collection Converter format)
+
+### Output Format
+
+The format of the output file.
+
+`1`: DB (osu! collection format)
+
+`2`: OSDB (Collection Manager format)
+
+`3`: CSV (CSV in Collection Converter format)
 
 ### Number of Header Rows
 
-The amount of header rows for CSV files. 
+The amount of header rows for CSV files. This value is unused when input or output is not CSV.
 
-When using CSV input this amount of rows will be ignored. When using CSV output any value above 1 will generate a header and 0 will generate no header.
+`0`: No header row
+
+`1`: One header row
 
 ## Dependencies
 
