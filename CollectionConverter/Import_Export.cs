@@ -1,108 +1,11 @@
-﻿using CollectionManager.DataTypes;
+using CollectionManager.DataTypes;
 using CollectionManager.Modules.FileIO;
 
 namespace CollectionConverter
 {
-    class Program
+    class Import_Export
     {
         public static OsuFileIo OsuFileIo = new OsuFileIo(new BeatmapExtension());
-
-        static void Main(string[] args)
-        {
-            string input;
-            string output;
-            string input_format;
-            string output_format;
-            string osudb;
-            int headers = 0;
-
-            Collections collection_loaded = new Collections();
-
-            if (args.Length != 0)
-            {
-                input = args[0];
-                output = args[1];
-                input_format = args[2];
-                output_format = args[3];
-                osudb = args[4];
-                if (input_format == "3" || output_format == "3")
-                {
-                    headers = int.Parse(args[5]);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Enter Input Path:");
-                input = Console.ReadLine();
-                Console.WriteLine("Enter Output Path:");
-                output = Console.ReadLine();
-                Console.WriteLine("Enter Input Format:\n1. DB (osu! collection format)\n2. OSDB (Collection Manager format)\n3. CSV (CSV in Collection Converter format)");
-                input_format = Console.ReadLine();
-                Console.WriteLine("Enter Output Format:\n1. DB (osu! collection format)\n2. OSDB (Collection Manager format)\n3. CSV (CSV in Collection Converter format)");
-                output_format = Console.ReadLine();
-                Console.WriteLine("Enter osu!.db path or 0 to skip loading osu!.db");
-                osudb = Console.ReadLine();
-                if (input_format == "3" || output_format == "3")
-                {
-                    Console.WriteLine("Header row in CSV:\n0. No header row\n1. One header row");
-                    headers = int.Parse(Console.ReadLine());
-                }
-            }
-
-            if (osudb != "0" && osudb != null)
-            {
-                OsuFileIo.OsuDatabase.Load(osudb);
-            }
-
-            switch (input_format)
-            {
-                case "1":
-                {
-                    collection_loaded = import_db(input);
-                    break;
-                }
-                case "2":
-                {
-                    collection_loaded = import_osdb(input);
-                    break;
-                }
-                case "3":
-                {
-                    collection_loaded = import_csv(input, headers);
-                    break;
-                }
-                default:
-                {
-                    Console.WriteLine("Invalid input format.");
-                    break;
-                }
-            }
-
-            switch (output_format)
-            {
-                case "1":
-                {
-                    export_db(output, collection_loaded);
-                    break;
-                }
-                case "2":
-                {
-                    export_osdb(output, collection_loaded);
-                    break;
-                }
-                case "3":
-                {
-                    export_csv(output, headers, collection_loaded);
-                    break;
-                }
-                default:
-                {
-                    Console.WriteLine("Invalid output format.");
-                    break;
-                }
-            }
-        }
-
         public static Collections import_db(string input)
         {
             return OsuFileIo.CollectionLoader.LoadOsuCollection(input);
@@ -113,7 +16,7 @@ namespace CollectionConverter
             return OsuFileIo.CollectionLoader.LoadOsdbCollections(input);
         }
 
-        public static Collections import_csv(string input, int headers)
+        public static Collections import_csv(string input, int headers = 0)
         {
             string[] lines;
             if (headers == 0)
@@ -127,27 +30,27 @@ namespace CollectionConverter
             
             List<string> CollectionNames = new List<string>();
             
-            var collections = new Collections();
+            Collections collections = new Collections();
 
             foreach (string line in lines)
             {
-                var values = line.Split(",");
+                string[] values = line.Split(",");
                 CollectionNames.Add(values[0].Trim('\"'));
             }
 
             foreach (string CollectionInList in CollectionNames.Distinct())
             {
-                var current_collection = new Collection(OsuFileIo.LoadedMaps) { Name = CollectionInList };
+                Collection current_collection = new Collection(OsuFileIo.LoadedMaps) { Name = CollectionInList };
 
                 foreach (string line in lines)
                 {
-                    var values = line.Split(",");
+                    string[] values = line.Split(",");
 
-                    var CollectionName = values[0].Trim('\"');
+                    string CollectionName = values[0].Trim('\"');
 
                     if (CollectionName == CollectionInList)
                     {
-                        var current_beatmap = new BeatmapExtension();
+                        BeatmapExtension current_beatmap = new BeatmapExtension();
 
                         try
                         {
@@ -268,14 +171,47 @@ namespace CollectionConverter
                         current_collection.AddBeatmap(current_beatmap);
                     }
                 }
-                
-                
+
                 collections.Add(current_collection);
-                current_collection = null;
             }
 
             return collections;
         }
+
+        public static Collections import_folder(string input, int headers = 0)
+        {
+            Collections merged_collection = new Collections();
+            Collections imported_file;
+            string[] files = Directory.GetFiles(input);
+            foreach (var file in files)
+            {
+                if (Path.GetExtension(file) == ".db")
+                {
+                    imported_file = import_db(file);
+                    foreach (Collection collection in imported_file)
+                    {
+                        merged_collection.Add(collection);
+                    }
+                }
+                if (Path.GetExtension(file) == ".osdb")
+                {
+                    imported_file = import_osdb(file);
+                    foreach (Collection collection in imported_file)
+                    {
+                        merged_collection.Add(collection);
+                    }
+                }
+                if (Path.GetExtension(file) == ".csv")
+                {
+                    imported_file = import_csv(file, headers);
+                    foreach (Collection collection in imported_file)
+                    {
+                        merged_collection.Add(collection);
+                    }
+                }
+            }
+            return merged_collection;
+        }  
 
         public static void export_db(string output, Collections collection_data)
         {
@@ -287,9 +223,9 @@ namespace CollectionConverter
             OsuFileIo.CollectionLoader.SaveOsdbCollection(collection_data, output);
         }
 
-        public static void export_csv(string output, int headers, Collections collection_data)
+        public static void export_csv(string output, Collections collection_data, int headers = 0)
         {
-            string[] lines = new string[collection_data.AllBeatmaps().Count() + 1];
+            string[] lines = new string[collection_data.AllBeatmaps().Count() + headers];
 
             int i;
             if (headers >= 1)
@@ -306,20 +242,20 @@ namespace CollectionConverter
             {
                 string CollectionName = collection.Name;
 
-                var beatmaps = collection.AllBeatmaps();
+                IEnumerable<BeatmapExtension> beatmaps = collection.AllBeatmaps();
 
                 foreach (var beatmap in beatmaps)
                 {
-                    var MapId = beatmap.MapId;
-                    var MapSetId = beatmap.MapSetId;
-                    var Md5 = beatmap.Md5;
-                    var PlayMode = beatmap.PlayMode;
-                    var ArtistRoman = beatmap.ArtistRoman;
-                    var ArtistUnicode = beatmap.ArtistUnicode;
-                    var TitleRoman = beatmap.TitleRoman;
-                    var TitleUnicode = beatmap.TitleUnicode;
-                    var DiffName = beatmap.DiffName;
-                    var StarsNomod = beatmap.StarsNomod;
+                    int MapId = beatmap.MapId;
+                    int MapSetId = beatmap.MapSetId;
+                    string Md5 = beatmap.Md5;
+                    CollectionManager.Enums.PlayMode PlayMode = beatmap.PlayMode;
+                    string ArtistRoman = beatmap.ArtistRoman;
+                    string ArtistUnicode = beatmap.ArtistUnicode;
+                    string TitleRoman = beatmap.TitleRoman;
+                    string TitleUnicode = beatmap.TitleUnicode;
+                    string DiffName = beatmap.DiffName;
+                    double StarsNomod = beatmap.StarsNomod;
 
                     lines[i] = "\"" + CollectionName + "\",\"" + MapId + "\",\"" + MapSetId + "\",\"" + Md5 + "\",\"" + PlayMode + "\",\"" + ArtistRoman + "\",\"" + ArtistUnicode + "\",\"" + TitleRoman + "\",\"" + TitleUnicode + "\",\"" + DiffName + "\",\"" + StarsNomod + "\"";
 
@@ -333,6 +269,40 @@ namespace CollectionConverter
             {
                 outputfile.WriteLine(line);
             }
+        }
+
+        public static void export_folder_db(string output, Collections collection_data)
+        {
+            foreach (Collection collection in collection_data)
+            {
+                export_db(output + "\\" + fix_filename(collection.Name) + ".db", new Collections { collection });
+            }
+        }
+
+        public static void export_folder_osdb(string output, Collections collection_data)
+        {
+            foreach (Collection collection in collection_data)
+            {
+                export_osdb(output + "\\" + fix_filename(collection.Name) + ".osdb", new Collections { collection });
+            }
+        }
+
+        public static void export_folder_csv(string output, Collections collection_data, int headers = 0)
+        {
+            foreach (Collection collection in collection_data)
+            {
+                export_csv(output + "\\" + fix_filename(collection.Name) + ".csv", new Collections { collection }, headers);
+            }
+        }
+
+        //replaces illegal characters for underscores
+        public static string fix_filename(string filename)
+        {
+            foreach (char invalidChar in Path.GetInvalidFileNameChars())
+            {
+                filename = filename.Replace(invalidChar.ToString(), "_");
+            }
+            return filename;
         }
     }
 }

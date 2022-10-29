@@ -34,6 +34,8 @@ The format of the input file.
 
 `3`: CSV (CSV in Collection Converter format)
 
+`4`: Folder (All collections in the folder will be parsed based on extension)
+
 ### Output Format
 
 The format of the output file.
@@ -43,6 +45,12 @@ The format of the output file.
 `2`: OSDB (Collection Manager format)
 
 `3`: CSV (CSV in Collection Converter format)
+
+`41`: Folder using DB (All collections individually exported in DB format)
+
+`42`: Folder using OSDB (All collections individually exported in OSDB format)
+
+`43`: Folder using CSV (All collections individually exported in CSV format)
 
 ### osu!.db Path
 
