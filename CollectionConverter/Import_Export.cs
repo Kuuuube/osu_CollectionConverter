@@ -182,7 +182,7 @@ namespace CollectionConverter
             Collections merged_collection = new Collections();
             Collections imported_file;
             string[] files = Directory.GetFiles(input);
-            foreach (var file in files)
+            foreach (string file in files)
             {
                 if (Path.GetExtension(file) == ".db")
                 {
@@ -237,13 +237,13 @@ namespace CollectionConverter
                 i = 0;
             }
             
-            foreach (var collection in collection_data)
+            foreach (Collection collection in collection_data)
             {
                 string CollectionName = collection.Name;
 
                 IEnumerable<BeatmapExtension> beatmaps = collection.AllBeatmaps();
 
-                foreach (var beatmap in beatmaps)
+                foreach (BeatmapExtension beatmap in beatmaps)
                 {
                     int MapId = beatmap.MapId;
                     int MapSetId = beatmap.MapSetId;
