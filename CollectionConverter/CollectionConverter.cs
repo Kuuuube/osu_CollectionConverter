@@ -7,13 +7,14 @@ namespace CollectionConverter
     {
         public static OsuFileIo OsuFileIo = new OsuFileIo(new BeatmapExtension());
 
+        public static string osudb = "0";
+
         static void Main(string[] args)
         {
             string input;
             string output;
             string input_format;
             string output_format;
-            string osudb = "0";
             int headers = 0;
 
             Collections collection_loaded = new Collections();

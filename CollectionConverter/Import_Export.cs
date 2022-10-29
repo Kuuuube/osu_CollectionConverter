@@ -5,18 +5,17 @@ namespace CollectionConverter
 {
     class Import_Export
     {
-        public static OsuFileIo OsuFileIo = new OsuFileIo(new BeatmapExtension());
         public static Collections import_db(string input)
         {
-            return OsuFileIo.CollectionLoader.LoadOsuCollection(input);
+            return CollectionConverter.OsuFileIo.CollectionLoader.LoadOsuCollection(input);
         }
 
         public static Collections import_osdb(string input)
         {
-            return OsuFileIo.CollectionLoader.LoadOsdbCollections(input);
+            return CollectionConverter.OsuFileIo.CollectionLoader.LoadOsdbCollections(input);
         }
 
-        public static Collections import_csv(string input, int headers = 0)
+        public static Collections import_csv(string input, int headers)
         {
             string[] lines;
             if (headers == 0)
@@ -40,7 +39,7 @@ namespace CollectionConverter
 
             foreach (string CollectionInList in CollectionNames.Distinct())
             {
-                Collection current_collection = new Collection(OsuFileIo.LoadedMaps) { Name = CollectionInList };
+                Collection current_collection = new Collection(CollectionConverter.OsuFileIo.LoadedMaps) { Name = CollectionInList };
 
                 foreach (string line in lines)
                 {
@@ -178,7 +177,7 @@ namespace CollectionConverter
             return collections;
         }
 
-        public static Collections import_folder(string input, int headers = 0)
+        public static Collections import_folder(string input, int headers)
         {
             Collections merged_collection = new Collections();
             Collections imported_file;
@@ -215,15 +214,15 @@ namespace CollectionConverter
 
         public static void export_db(string output, Collections collection_data)
         {
-            OsuFileIo.CollectionLoader.SaveOsuCollection(collection_data, output);
+            CollectionConverter.OsuFileIo.CollectionLoader.SaveOsuCollection(collection_data, output);
         }
 
         public static void export_osdb(string output, Collections collection_data)
         {
-            OsuFileIo.CollectionLoader.SaveOsdbCollection(collection_data, output);
+            CollectionConverter.OsuFileIo.CollectionLoader.SaveOsdbCollection(collection_data, output);
         }
 
-        public static void export_csv(string output, Collections collection_data, int headers = 0)
+        public static void export_csv(string output, Collections collection_data, int headers)
         {
             string[] lines = new string[collection_data.AllBeatmaps().Count() + headers];
 
@@ -287,7 +286,7 @@ namespace CollectionConverter
             }
         }
 
-        public static void export_folder_csv(string output, Collections collection_data, int headers = 0)
+        public static void export_folder_csv(string output, Collections collection_data, int headers)
         {
             foreach (Collection collection in collection_data)
             {
