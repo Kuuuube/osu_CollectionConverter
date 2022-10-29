@@ -18,15 +18,15 @@ CollectionConverter {Input} {Output} {Input Format} {Output Format} {osu!.db Pat
 
 ### Input
 
-The relative or absolute file path for the input file.
+The relative or absolute file path for the input file or folder.
 
 ### Output
 
-The relative or absolute file path for the output file.
+The relative or absolute file path for the output file or folder.
 
 ### Input Format
 
-The format of the input file.
+The format of the input file or folder.
 
 `1`: DB (osu! collection format)
 
@@ -38,7 +38,7 @@ The format of the input file.
 
 ### Output Format
 
-The format of the output file.
+The format of the output file or folder.
 
 `1`: DB (osu! collection format)
 
