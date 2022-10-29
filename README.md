@@ -13,7 +13,7 @@ Either run with or without command line args.
 ## Command line args:
 
 ```
-CollectionConverter {Input} {Output} {Input Format} {Output Format} {Number of Header Rows}
+CollectionConverter {Input} {Output} {Input Format} {Output Format} {osu!.db Path} {Number of Header Rows}
 ```
 
 ### Input
@@ -43,6 +43,14 @@ The format of the output file.
 `2`: OSDB (Collection Manager format)
 
 `3`: CSV (CSV in Collection Converter format)
+
+### osu!.db Path
+
+The relative or absolute file path for an osu!.db file to get map info from.
+
+`{relative or absolute path}`: Loads the osu!.db from the path given.
+
+`0`: Skips loading the osu!.db.
 
 ### Number of Header Rows
 

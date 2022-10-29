@@ -13,6 +13,7 @@ namespace CollectionConverter
             string output;
             string input_format;
             string output_format;
+            string osudb;
             int headers = 0;
 
             Collections collection_loaded = new Collections();
@@ -23,9 +24,10 @@ namespace CollectionConverter
                 output = args[1];
                 input_format = args[2];
                 output_format = args[3];
+                osudb = args[4];
                 if (input_format == "3" || output_format == "3")
                 {
-                    headers = int.Parse(args[4]);
+                    headers = int.Parse(args[5]);
                 }
             }
             else
@@ -38,11 +40,18 @@ namespace CollectionConverter
                 input_format = Console.ReadLine();
                 Console.WriteLine("Enter Output Format:\n1. DB (osu! collection format)\n2. OSDB (Collection Manager format)\n3. CSV (CSV in Collection Converter format)");
                 output_format = Console.ReadLine();
+                Console.WriteLine("Enter osu!.db path or 0 to skip loading osu!.db");
+                osudb = Console.ReadLine();
                 if (input_format == "3" || output_format == "3")
                 {
                     Console.WriteLine("Header row in CSV:\n0. No header row\n1. One header row");
                     headers = int.Parse(Console.ReadLine());
                 }
+            }
+
+            if (osudb != "0" && osudb != null)
+            {
+                OsuFileIo.OsuDatabase.Load(osudb);
             }
 
             switch (input_format)
@@ -310,7 +319,7 @@ namespace CollectionConverter
                     var TitleRoman = beatmap.TitleRoman;
                     var TitleUnicode = beatmap.TitleUnicode;
                     var DiffName = beatmap.DiffName;
-                    var StarsNomod = beatmap.StarsNomodParse;
+                    var StarsNomod = beatmap.StarsNomod;
 
                     lines[i] = "\"" + CollectionName + "\",\"" + MapId + "\",\"" + MapSetId + "\",\"" + Md5 + "\",\"" + PlayMode + "\",\"" + ArtistRoman + "\",\"" + ArtistUnicode + "\",\"" + TitleRoman + "\",\"" + TitleUnicode + "\",\"" + DiffName + "\",\"" + StarsNomod + "\"";
 
