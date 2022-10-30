@@ -86,7 +86,7 @@ namespace CollectionConverter
                     collection_loaded = Import_Export.import_csv(input, headers);
                     break;
                 }
-                 case "4":
+                case "4":
                 {
                     collection_loaded = Import_Export.import_folder(input, headers);
                     break;
