@@ -77,10 +77,23 @@ namespace CollectionManager.DataTypes
         //TODO: add helper functions for adding/removing star values
         public PlayModeStars ModPpStars = new PlayModeStars();
 
+        public double StarsField = -1d;
         public double StarsNomod
         {
-            get { return Stars(PlayMode); }
-            set {}
+            get
+            {
+                if (Stars(PlayMode) == -1d) {
+                    return StarsField;
+                }
+                return Stars(PlayMode);
+            }
+            set
+            {
+                if (value == -1d) {
+                    StarsField = Stars(PlayMode);
+                }
+                StarsField = value;
+            }
         }
 
         public double Stars(PlayMode playMode, Mods mods = Mods.Nm)
