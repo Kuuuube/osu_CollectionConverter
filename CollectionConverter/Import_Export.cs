@@ -68,7 +68,7 @@ namespace CollectionConverter
                             i += 1;
                             continue;
                         }
-                        if (current_char == '"' && next_char == '"') {
+                        if (current_char == '"' && next_char == '"' && found_quote == true) {
                             chars_list.Add(current_char);
                             i += 2;
                             continue;
