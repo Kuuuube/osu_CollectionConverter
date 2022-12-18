@@ -1,3 +1,4 @@
+using System.Text;
 using CollectionManager.DataTypes;
 using CollectionManager.Modules.FileIO;
 
@@ -26,9 +27,9 @@ namespace CollectionConverter
             {
                 lines = System.IO.File.ReadAllLines(input).Skip(headers).ToArray();
             }
-            
+
             List<string> CollectionNames = new List<string>();
-            
+
             Collections collections = new Collections();
 
             foreach (string line in lines)
@@ -43,7 +44,61 @@ namespace CollectionConverter
 
                 foreach (string line in lines)
                 {
-                    string[] values = line.Split(",");
+                    List<char> chars_list = new();
+                    char[] line_chars = line.ToCharArray();
+                    List<string> values = new();
+                    bool found_quote = false;
+                    int i = 0;
+                    while (i < line_chars.Length)
+                    {
+                        char current_char = safe_get_char(line_chars, i);
+                        char next_char = safe_get_char(line_chars, i + 1);
+
+                        if (current_char == ',' && found_quote == false) {
+                            try
+                            {
+                                values.Add(new string(chars_list.ToArray()));
+                                chars_list = new();
+                            }
+                            catch
+                            {
+                                values.Add('\0'.ToString());
+                                chars_list = new();
+                            }
+                            i += 1;
+                            continue;
+                        }
+                        if (current_char == '"' && next_char == '"') {
+                            chars_list.Add(current_char);
+                            i += 2;
+                            continue;
+                        }
+                        if (current_char == '"' && found_quote == false) {
+                            found_quote = true;
+                            i += 1;
+                            continue;
+                        }
+                        if (current_char == '"' && found_quote == true) {
+                            found_quote = false;
+                            i += 1;
+                            continue;
+                        }
+                        chars_list.Add(current_char);
+
+                        i += 1;
+                    }
+                    if (i == line_chars.Length) {
+                        try
+                        {
+                            values.Add(new string(chars_list.ToArray()));
+                            chars_list = new();
+                        }
+                        catch
+                        {
+                            values.Add('\0'.ToString());
+                            chars_list = new();
+                        }
+                    }
 
                     string CollectionName = values[0].Trim('\"');
 
@@ -166,7 +221,7 @@ namespace CollectionConverter
                         {
                             current_beatmap.StarsNomod = -1d;
                         }
-                        
+
                         current_collection.AddBeatmap(current_beatmap);
                     }
                 }
@@ -302,6 +357,14 @@ namespace CollectionConverter
                 filename = filename.Replace(invalidChar.ToString(), "_");
             }
             return filename;
+        }
+
+        public static char safe_get_char(char[] array, int index) {
+            if (index >= array.Length) {
+                return '\0';
+            } else {
+                return array[index];
+            }
         }
     }
 }
