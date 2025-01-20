@@ -9,11 +9,11 @@ namespace CollectionConverter
 
         static void Main(string[] args)
         {
-            string input;
-            string output;
-            string input_format;
-            string output_format;
-            string osudb = "0";
+            string? input;
+            string? output;
+            string? input_format;
+            string? output_format;
+            string? osudb = "0";
             int headers = 0;
 
             Collections collection_loaded = [];
@@ -60,8 +60,15 @@ namespace CollectionConverter
                 if (input_format == "3" || output_format == "3" || input_format == "4" || output_format == "43")
                 {
                     Console.WriteLine("Header row in CSV:\n0. No header row\n1. One header row");
-                    headers = int.Parse(Console.ReadLine());
+                    var header_input = Console.ReadLine();
+                    if (header_input != null) {
+                        headers = int.Parse(header_input);
+                    }
                 }
+            }
+
+            if (input == null || output == null) {
+                return;
             }
 
             if (osudb != "0" && osudb != null)
