@@ -1,2 +1,2 @@
-dotnet publish CollectionConverter --configuration Release -p:PublishSingleFile=true -p:DebugType=embedded --self-contained false --runtime win-x64 --framework net6.0 -o build/win-x64
-dotnet publish CollectionConverter --configuration Release -p:PublishSingleFile=true -p:DebugType=embedded --self-contained false --runtime linux-x64 --framework net6.0 -o build/linux-x64
+dotnet publish CollectionConverter --configuration Release -p:PublishSingleFile=true -p:DebugType=embedded --self-contained false --runtime win-x64 --framework net8.0 -o build/win-x64
+dotnet publish CollectionConverter --configuration Release -p:PublishSingleFile=true -p:DebugType=embedded --self-contained false --runtime linux-x64 --framework net8.0 -o build/linux-x64
