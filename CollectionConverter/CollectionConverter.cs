@@ -51,15 +51,27 @@ namespace CollectionConverter
                 input = Console.ReadLine();
                 Console.WriteLine("Enter Output Path:");
                 output = Console.ReadLine();
-                Console.WriteLine("Enter Input Format:\n1. DB (osu! collection format)\n2. OSDB (Collection Manager format)\n3. CSV (CSV in Collection Converter format)\n4. Folder (All collections in the folder will be parsed based on extension)");
+                Console.WriteLine("Enter Input Format:\n"
+                    + "1. DB (osu! collection format)\n"
+                    + "2. OSDB (Collection Manager format)\n"
+                    + "3. CSV (CSV in Collection Converter format)\n"
+                    + "4. Folder (All collections in the folder will be parsed based on extension)");
                 input_format = Console.ReadLine();
-                Console.WriteLine("Enter Output Format:\n1. DB (osu! collection format)\n2. OSDB (Collection Manager format)\n3. CSV (CSV in Collection Converter format)\n41. Folder using DB (All collections individually exported in DB format)\n42. Folder using OSDB (All collections individually exported in OSDB format)\n43. Folder using CSV (All collections individually exported in CSV format)");
+                Console.WriteLine("Enter Output Format:\n"
+                    + "1. DB (osu! collection format)\n"
+                    + "2. OSDB (Collection Manager format)\n"
+                    + "3. CSV (CSV in Collection Converter format)\n"
+                    + "41. Folder using DB (All collections individually exported in DB format)\n"
+                    + "42. Folder using OSDB (All collections individually exported in OSDB format)\n"
+                    + "43. Folder using CSV (All collections individually exported in CSV format)");
                 output_format = Console.ReadLine();
                 Console.WriteLine("Enter osu!.db path or 0 to skip loading osu!.db");
                 osudb = Console.ReadLine();
                 if (input_format == "3" || output_format == "3" || input_format == "4" || output_format == "43")
                 {
-                    Console.WriteLine("Header row in CSV:\n0. No header row\n1. One header row");
+                    Console.WriteLine("Header row in CSV:\n"
+                        + "0. No header row\n"
+                        + "1. One header row");
                     var header_input = Console.ReadLine();
                     if (header_input != null) {
                         headers = int.Parse(header_input);
