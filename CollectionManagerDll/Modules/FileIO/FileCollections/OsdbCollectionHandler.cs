@@ -82,7 +82,7 @@ namespace CollectionManager.Modules.FileIO.FileCollections
             {
                 var inputLength = inputStream.Position;
                 inputStream.Position = 0;
-                archive.AddEntry("collection.osdb", inputStream, inputLength, DateTime.UtcNow);
+                archive.AddEntry("uncompressed_collection_NOTosdb.NOTosdb", inputStream, inputLength, DateTime.UtcNow);
                 archive.SaveTo(outputStream, new WriterOptions(CompressionType.GZip));
             }
         }
