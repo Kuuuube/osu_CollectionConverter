@@ -52,7 +52,7 @@ namespace CollectionManager.Modules.FileIO.FileCollections
             => !isMinimalCollection(versionString);
         private bool isMinimalCollection(string versionString)
             => versionString.EndsWith("min");
-        
+
         public void WriteOsdb(Collections collections, string fullFileDir, string editor, bool minimalWrite = false)
         {
             using (var fileStream = new FileStream(fullFileDir, FileMode.Create, FileAccess.ReadWrite))

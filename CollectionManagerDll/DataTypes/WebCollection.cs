@@ -50,7 +50,7 @@ namespace CollectionManager.DataTypes
             set => Name = value;
         }
 
-        new public int Id
+        public int Id
         {
             get => OnlineId;
             set => OnlineId = value;

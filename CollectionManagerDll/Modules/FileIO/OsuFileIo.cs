@@ -11,17 +11,15 @@ namespace CollectionManager.Modules.FileIO
         public OsuDatabase OsuDatabase;
         public OsuSettingsLoader OsuSettings = new OsuSettingsLoader();
         public CollectionLoader CollectionLoader;
+        public OsuPathResolver OsuPathResolver => OsuPathResolver.Instance;
         public MapCacher LoadedMaps => OsuDatabase.LoadedMaps;
 
         public ScoresDatabaseIo ScoresLoader;
-        public IScoreDataStorer ScoresDatabase = new ScoresCacher();
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="beatmapBase">Object that</param>
+        public IScoreDataManager ScoresDatabase = new ScoresCacher();
+
         public OsuFileIo(Beatmap beatmapBase)
         {
-            OsuDatabase = new OsuDatabase(beatmapBase);
+            OsuDatabase = new OsuDatabase(beatmapBase, ScoresDatabase);
             CollectionLoader = new CollectionLoader(OsuDatabase.LoadedMaps);
             ScoresLoader = new ScoresDatabaseIo(ScoresDatabase);
         }
