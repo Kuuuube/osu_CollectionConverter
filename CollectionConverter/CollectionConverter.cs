@@ -62,7 +62,7 @@ namespace CollectionConverter
                     + "1. DB (osu! collection format)\n"
                     + "2. OSDB (Collection Manager format)\n"
                     + "3. CSV (CSV in Collection Converter format)\n"
-                    + "4. REALM (osu! lazer collection format)\n"
+                    + "4. Direct write to osu! lazer client.realm database (BACKUP BEFORE RUNNING THIS)\n"
                     + "51. Folder using DB (All collections individually exported in DB format)\n"
                     + "52. Folder using OSDB (All collections individually exported in OSDB format)\n"
                     + "53. Folder using CSV (All collections individually exported in CSV format)");
