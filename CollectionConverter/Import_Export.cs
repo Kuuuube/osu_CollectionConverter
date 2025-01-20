@@ -11,6 +11,11 @@ namespace CollectionConverter
             return CollectionConverter.OsuFileIo.CollectionLoader.LoadOsuCollection(input);
         }
 
+        public static Collections import_lazer_db(string input)
+        {
+            return CollectionConverter.OsuFileIo.CollectionLoader.LoadOsuLazerCollection(input);
+        }
+
         public static Collections import_osdb(string input)
         {
             return CollectionConverter.OsuFileIo.CollectionLoader.LoadOsdbCollections(input);
@@ -270,6 +275,11 @@ namespace CollectionConverter
         public static void export_db(string output, Collections collection_data)
         {
             CollectionConverter.OsuFileIo.CollectionLoader.SaveOsuCollection(collection_data, output);
+        }
+
+        public static void export_lazer_db(string output, Collections collection_data)
+        {
+            CollectionConverter.OsuFileIo.CollectionLoader.SaveOsuLazerCollection(collection_data, output);
         }
 
         public static void export_osdb(string output, Collections collection_data)

@@ -55,19 +55,21 @@ namespace CollectionConverter
                     + "1. DB (osu! collection format)\n"
                     + "2. OSDB (Collection Manager format)\n"
                     + "3. CSV (CSV in Collection Converter format)\n"
-                    + "4. Folder (All collections in the folder will be parsed based on extension)");
+                    + "4. REALM (osu! lazer collection format)\n"
+                    + "5. Folder (All collections in the folder will be parsed based on extension)");
                 input_format = Console.ReadLine();
                 Console.WriteLine("Enter Output Format:\n"
                     + "1. DB (osu! collection format)\n"
                     + "2. OSDB (Collection Manager format)\n"
                     + "3. CSV (CSV in Collection Converter format)\n"
-                    + "41. Folder using DB (All collections individually exported in DB format)\n"
-                    + "42. Folder using OSDB (All collections individually exported in OSDB format)\n"
-                    + "43. Folder using CSV (All collections individually exported in CSV format)");
+                    + "4. REALM (osu! lazer collection format)\n"
+                    + "51. Folder using DB (All collections individually exported in DB format)\n"
+                    + "52. Folder using OSDB (All collections individually exported in OSDB format)\n"
+                    + "53. Folder using CSV (All collections individually exported in CSV format)");
                 output_format = Console.ReadLine();
-                Console.WriteLine("Enter osu!.db path or 0 to skip loading osu!.db");
+                Console.WriteLine("Enter osu!.db path, client.realm path (lazer) or 0 to skip loading osu! client database");
                 osudb = Console.ReadLine();
-                if (input_format == "3" || output_format == "3" || input_format == "4" || output_format == "43")
+                if (input_format == "3" || output_format == "3" || input_format == "5" || output_format == "53")
                 {
                     Console.WriteLine("Header row in CSV:\n"
                         + "0. No header row\n"
@@ -107,6 +109,11 @@ namespace CollectionConverter
                 }
                 case "4":
                 {
+                    collection_loaded = Import_Export.import_lazer_db(input);
+                    break;
+                }
+                case "5":
+                {
                     collection_loaded = Import_Export.import_folder(input, headers);
                     break;
                 } 
@@ -134,17 +141,22 @@ namespace CollectionConverter
                     Import_Export.export_csv(output, collection_loaded, headers);
                     break;
                 }
-                case "41":
+                case "4":
+                {
+                    Import_Export.export_lazer_db(output, collection_loaded);
+                    break;
+                }
+                case "51":
                 {
                     Import_Export.export_folder_db(output, collection_loaded);
                     break;
                 }
-                case "42":
+                case "52":
                 {
                     Import_Export.export_folder_osdb(output, collection_loaded);
                     break;
                 }
-                case "43":
+                case "53":
                 {
                     Import_Export.export_folder_csv(output, collection_loaded, headers);
                     break;
