@@ -5,7 +5,7 @@ namespace CollectionConverter
 {
     class CollectionConverter
     {
-        public static OsuFileIo OsuFileIo = new OsuFileIo(new BeatmapExtension());
+        public static OsuFileIo OsuFileIo = new(new BeatmapExtension());
 
         static void Main(string[] args)
         {
@@ -16,7 +16,7 @@ namespace CollectionConverter
             string osudb = "0";
             int headers = 0;
 
-            Collections collection_loaded = new Collections();
+            Collections collection_loaded = [];
 
             if (args.Length != 0)
             {

@@ -28,9 +28,9 @@ namespace CollectionConverter
                 lines = System.IO.File.ReadAllLines(input).Skip(headers).ToArray();
             }
 
-            List<string> CollectionNames = new List<string>();
+            List<string> CollectionNames = [];
 
-            Collections collections = new Collections();
+            Collections collections = [];
 
             foreach (string line in lines)
             {
@@ -40,13 +40,13 @@ namespace CollectionConverter
 
             foreach (string CollectionInList in CollectionNames.Distinct())
             {
-                Collection current_collection = new Collection(CollectionConverter.OsuFileIo.LoadedMaps) { Name = CollectionInList };
+                Collection current_collection = new(CollectionConverter.OsuFileIo.LoadedMaps) { Name = CollectionInList };
 
                 foreach (string line in lines)
                 {
-                    List<char> chars_list = new();
+                    List<char> chars_list = [];
                     char[] line_chars = line.ToCharArray();
-                    List<string> values = new();
+                    List<string> values = [];
                     bool found_quote = false;
                     int i = 0;
                     while (i < line_chars.Length)
@@ -58,12 +58,12 @@ namespace CollectionConverter
                             try
                             {
                                 values.Add(new string(chars_list.ToArray()));
-                                chars_list = new();
+                                chars_list = [];
                             }
                             catch
                             {
                                 values.Add('\0'.ToString());
-                                chars_list = new();
+                                chars_list = [];
                             }
                             i += 1;
                             continue;
@@ -234,7 +234,7 @@ namespace CollectionConverter
 
         public static Collections import_folder(string input, int headers)
         {
-            Collections merged_collection = new Collections();
+            Collections merged_collection = [];
             Collections imported_file;
             string[] files = Directory.GetFiles(input);
             foreach (string file in files)
@@ -242,7 +242,7 @@ namespace CollectionConverter
                 if (Path.GetExtension(file) == ".db")
                 {
                     imported_file = import_db(file);
-                    foreach (Collection collection in imported_file)
+                    foreach (Collection collection in imported_file.Cast<Collection>())
                     {
                         merged_collection.Add(collection);
                     }
@@ -250,7 +250,7 @@ namespace CollectionConverter
                 if (Path.GetExtension(file) == ".osdb")
                 {
                     imported_file = import_osdb(file);
-                    foreach (Collection collection in imported_file)
+                    foreach (Collection collection in imported_file.Cast<Collection>())
                     {
                         merged_collection.Add(collection);
                     }
@@ -258,7 +258,7 @@ namespace CollectionConverter
                 if (Path.GetExtension(file) == ".csv")
                 {
                     imported_file = import_csv(file, headers);
-                    foreach (Collection collection in imported_file)
+                    foreach (Collection collection in imported_file.Cast<Collection>())
                     {
                         merged_collection.Add(collection);
                     }
@@ -327,7 +327,7 @@ namespace CollectionConverter
 
         public static void export_folder_db(string output, Collections collection_data)
         {
-            foreach (Collection collection in collection_data)
+            foreach (Collection collection in collection_data.Cast<Collection>())
             {
                 export_db(output + "\\" + fix_filename(collection.Name) + ".db", new Collections { collection });
             }
@@ -335,7 +335,7 @@ namespace CollectionConverter
 
         public static void export_folder_osdb(string output, Collections collection_data)
         {
-            foreach (Collection collection in collection_data)
+            foreach (Collection collection in collection_data.Cast<Collection>())
             {
                 export_osdb(output + "\\" + fix_filename(collection.Name) + ".osdb", new Collections { collection });
             }
@@ -343,7 +343,7 @@ namespace CollectionConverter
 
         public static void export_folder_csv(string output, Collections collection_data, int headers)
         {
-            foreach (Collection collection in collection_data)
+            foreach (Collection collection in collection_data.Cast<Collection>())
             {
                 export_csv(output + "\\" + fix_filename(collection.Name) + ".csv", new Collections { collection }, headers);
             }
