@@ -73,7 +73,7 @@ namespace CollectionConverter
                         + "0. No header row\n"
                         + "1. One header row");
                     var header_input = Console.ReadLine();
-                    if (header_input != null) {
+                    if (header_input != null && header_input.Length > 0) {
                         headers = int.Parse(header_input);
                     }
                 }
